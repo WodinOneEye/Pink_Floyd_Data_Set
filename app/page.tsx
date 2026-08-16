@@ -18,7 +18,7 @@ function parseCSV(text: string): Song[] {
 function score(lyrics:string,theme:Theme){const tokens=lyrics.toLowerCase().match(/[a-z']+/g)||[];if(!tokens.length)return 0;const set=new Set(theme.words);return tokens.reduce((n,w)=>n+(set.has(w)?1:0),0)/tokens.length*100;}
 export default function Home(){
   const [songs,setSongs]=useState<Song[]>([]); const [active,setActive]=useState(()=>new Set(THEMES.map(t=>t.name))); const [selectedYear,setSelectedYear]=useState(1979);
-  useEffect(()=>{fetch("/pink_floyd_lyrics.csv").then(r=>r.text()).then(t=>setSongs(parseCSV(t)));},[]);
+  useEffect(()=>{fetch(new URL("pink_floyd_lyrics.csv",document.baseURI)).then(r=>r.text()).then(t=>setSongs(parseCSV(t)));},[]);
   const years=useMemo(()=>Array.from(new Set(songs.map(s=>s.year))).sort((a,b)=>a-b),[songs]);
   const series=useMemo(()=>THEMES.map(theme=>({theme,points:years.map(year=>{const m=songs.filter(s=>s.year===year);return{year,value:m.reduce((n,s)=>n+score(s.lyrics,theme),0)/Math.max(m.length,1)};})})),[songs,years]);
   const yearSongs=songs.filter(s=>s.year===selectedYear); const yearScores=THEMES.map(theme=>({theme,value:yearSongs.reduce((n,s)=>n+score(s.lyrics,theme),0)/Math.max(yearSongs.length,1)})).sort((a,b)=>b.value-a.value); const max=Math.max(1,...series.flatMap(s=>s.points.map(p=>p.value))); const selectedIndex=Math.max(0,years.indexOf(selectedYear));
