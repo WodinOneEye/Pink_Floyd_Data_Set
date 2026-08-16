@@ -1,4 +1,4 @@
 import type { Metadata } from "next";
 import "./globals.css";
-export const metadata: Metadata={title:"The Lyric Prism — Pink Floyd Themes",description:"Explore how recurring lyrical themes changed across Pink Floyd's discography."};
+export const metadata: Metadata={metadataBase:new URL("https://pink-floyd-lyric-prism.booradly.chatgpt.site"),title:"The Lyric Prism — Pink Floyd Themes",description:"Explore how recurring lyrical themes changed across Pink Floyd's discography from 1967 to 2014.",openGraph:{title:"The Lyric Prism",description:"An interactive study of lyrical themes across Pink Floyd's discography, 1967—2014.",images:[{url:"/og.png",width:1200,height:630,alt:"The Lyric Prism — Pink Floyd, 1967—2014"}]},twitter:{card:"summary_large_image",title:"The Lyric Prism",description:"An interactive study of lyrical themes across Pink Floyd's discography, 1967—2014.",images:["/og.png"]}};
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body>{children}</body></html>;}
